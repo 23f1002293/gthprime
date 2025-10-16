@@ -2,49 +2,75 @@
 
 ## Summary
 
-A minimal, single-page web application that calculates the nth prime number. The user can provide the integer 'n' either through an input field on the page or directly as a URL query parameter.
+This is a minimal, single-page web application that calculates the nth prime number. A user can input a positive integer 'n' into a form or provide it as a URL query parameter (`?n=...`) to find the corresponding prime number. The application's background is styled with a specific image.
 
 ## Setup
 
-No server or dependencies are required. This is a pure HTML/JavaScript application.
+No installation or build process is required. Simply download the following files into the same directory:
 
-1.  Save the `index.html` file to your local machine.
-2.  Open the `index.html` file in any modern web browser (e.g., Chrome, Firefox, Safari).
+1.  `index.html`
+2.  `Login.png` (You will need to provide this image)
+
+Then, open `index.html` in any modern web browser.
 
 ## Usage
 
 There are two ways to use the application:
 
-1.  **Via the Web Interface**:
+1.  **Interactive Form:**
     *   Open `index.html`.
-    *   Enter a positive integer into the input field labeled "Enter n:".
-    *   Click the "Generate" button.
+    *   Enter a positive integer into the input field labeled "Enter a positive integer (n):".
+    *   Click the "Find nth Prime" button.
     *   The result will be displayed below the button.
 
-2.  **Via URL Parameter**:
-    *   Append `?n=<value>` to the file path in your browser's address bar, where `<value>` is the positive integer you want to find the prime for.
-    *   Example: `file:///path/to/your/index.html?n=100`
-    *   The page will load and automatically calculate and display the result for the given 'n'.
+2.  **URL Parameter:**
+    *   Append `?n=<number>` to the URL in your browser's address bar.
+    *   For example: `file:///path/to/your/folder/index.html?n=100`
+    *   The page will automatically calculate and display the result for the given 'n' on load.
 
 ## Code Explanation
 
-*   **`index.html`**: The single file containing all the code.
-*   **HTML Structure**: A basic HTML5 document with a `main` section. It includes a `form` with a number input and a submit button. A `div` with the ID `result` is used to display the output.
-*   **JavaScript Logic** (embedded in a `<script>` tag):
-    *   **`isPrime(num)`**: A helper function that determines if a number is prime using trial division up to its square root. This is an efficient check for individual numbers.
-    *   **`findNthPrime(n)`**: The core function. It iterates through integers, using `isPrime()` to check each one. It maintains a count of primes found and returns the number that corresponds to the nth prime.
-    *   **Event Listeners**:
-        *   An event listener for `DOMContentLoaded` is used to initialize the application once the page is fully loaded. It checks the URL for an 'n' parameter and, if found, triggers the calculation.
-        *   An event listener on the form's `submit` event prevents the default page reload, retrieves the value from the input field, and calls the calculation function.
-    *   **DOM Manipulation**: The script updates the `textContent` of the `#result` div to show the calculated prime number or any error messages.
+### `index.html`
+
+The entire application is contained within this single file.
+
+*   **HTML Structure**: A standard HTML5 document containing a `main` element that centers a form on the page. The form includes a number input, a submit button, and a paragraph tag (`<p>`) to display the result.
+*   **CSS**: Embedded within a `<style>` tag. It sets `Login.png` as the full-screen background image and provides basic styling for centering content, the input form, and the result text to ensure readability against the background.
+*   **JavaScript**: Embedded within a `<script>` tag.
+    *   `isPrime(num)`: An efficient function to check if a given number is prime. It handles small numbers and then uses an optimized loop (stepping by 6) to check for factors.
+    *   `getNthPrime(n)`: The core logic function. It iterates through numbers, using `isPrime` to count primes until it finds the nth one.
+    *   `handleFormSubmit(event)`: Prevents the default form submission, reads the input value, validates it, calls `getNthPrime`, and displays the result or an error message in the designated result paragraph.
+    *   **Event Listeners**: 
+        *   An event listener on the form's `submit` event triggers the calculation when the button is clicked.
+        *   A `DOMContentLoaded` listener runs when the page first loads. It checks for an `n` parameter in the URL and, if found, automatically triggers the calculation.
 
 ## Version Update Information
 
-*   **v1.0.0 (2023-10-27)**
-    *   Initial release.
-    *   Core functionality for calculating the nth prime number.
-    *   Support for input via form and URL parameter.
+*   **Date**: 2023-10-27
+*   **Version**: 1.1.0
+*   **Changes**: 
+    *   Updated the application background to use `Login.png`.
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License
+
+Copyright (c) 2023
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
