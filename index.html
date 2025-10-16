@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nth Prime Number Generator</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f0f2f5;
+        }
+        main { 
+            padding: 2rem; 
+            background-color: white; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            text-align: center; 
+        }
+        h1 { 
+            margin-top: 0; 
+            color: #333;
+        }
+        form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 1rem; 
+        }
+        input[type="number"] { 
+            padding: 0.5rem; 
+            font-size: 1rem; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        button { 
+            padding: 0.75rem; 
+            font-size: 1rem; 
+            font-weight: bold; 
+            color: white; 
+            background-color: #007bff; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background-color: #0056b3; 
+        }
+        #result { 
+            margin-top: 1.5rem; 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            min-height: 1.5rem; 
+            color: #1d1d1d;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Nth Prime Number Generator</h1>
+        <form id="primeForm">
+            <label for="n_input">Enter n:</label>
+            <input type="number" id="n_input" name="n" placeholder="e.g., 100" min="1" required>
+            <button type="submit">Generate</button>
+        </form>
+        <div id="result"></div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('primeForm');
+            const input = document.getElementById('n_input');
+            const resultDiv = document.getElementById('result');
+
+            // Helper function to check if a number is prime
+            const isPrime = (num) => {
+                if (num <= 1) return false;
+                if (num <= 3) return true;
+                if (num % 2 === 0 || num % 3 === 0) return false;
+                for (let i = 5; i * i <= num; i = i + 6) {
+                    if (num % i === 0 || num % (i + 2) === 0) return false;
+                }
+                return true;
+            };
+
+            // Main function to find the nth prime number
+            const findNthPrime = (n) => {
+                if (n === 1) return 2;
+                let count = 1;
+                let candidate = 1;
+                while (count < n) {
+                    candidate += 2; // Check only odd numbers after 2
+                    if (isPrime(candidate)) {
+                        count++;
+                    }
+                }
+                return candidate;
+            };
+
+            const handleCalculation = (n) => {
+                if (!n || n < 1) {
+                    resultDiv.textContent = 'Please enter a positive integer.';
+                    return;
+                }
+                resultDiv.textContent = 'Calculating...';
+                
+                // Use setTimeout to prevent UI blocking for large numbers
+                setTimeout(() => {
+                    const prime = findNthPrime(n);
+                    resultDiv.innerHTML = `The <sup>${n}th</sup> prime number is: <strong>${prime}</strong>`;
+                }, 50);
+            };
+
+            // Handle form submission
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const n = parseInt(input.value, 10);
+                handleCalculation(n);
+            });
+
+            // Check for URL parameter on page load
+            const urlParams = new URLSearchParams(window.location.search);
+            const nFromUrl = urlParams.get('n');
+            if (nFromUrl) {
+                const n = parseInt(nFromUrl, 10);
+                input.value = n;
+                handleCalculation(n);
+            }
+        });
+    </script>
+</body>
+</html>
